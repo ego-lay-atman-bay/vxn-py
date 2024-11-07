@@ -5,11 +5,11 @@ import dataclasses_struct as dcs
 
 from .audioformat import AudioFormat
 
-
 @dcs.dataclass()
 class RIFFHeader():
     magic: Annotated[bytes, 4] = b'RIFF'
     chunk_size: dcs.U32 = 0
+
 
 @dcs.dataclass()
 class WAVEHeader():
@@ -20,6 +20,12 @@ class FormatHeader():
     fmt: Annotated[bytes, 4] = b'fmt '
     chunk_size: dcs.U32 = 0
     format_tag: dcs.U32 = 0
+
+@dcs.dataclass()
+class WAV_DATA():
+    riff: RIFFHeader
+    wave: WAVEHeader
+    format_header: FormatHeader
 
 class WAV(AudioFormat):
     EXTENSION = 'wav'
@@ -49,18 +55,26 @@ class WAV(AudioFormat):
     def create_format_header(self) -> bytes:
         return b''
     
+    def get_riff_chunk_size(
+        self,
+        wav_header: bytes,
+        format_header: bytes,
+        data: bytes,
+    ):
+        return len(wav_header) + len(format_header) + len(data)
+    
     def create_header(self) -> bytes:
         riff_header = RIFFHeader()
         wav_header = WAVEHeader()
         format_header = self.create_format_header()
 
         data = self.create_data_chunk()
-
-        riff_header.chunk_size = wav_header.__dataclass_struct__.size + \
-                                 len(format_header) + \
-                                 len(data)
         
-        result = riff_header.pack() + wav_header.pack() + format_header + data
+        packed_wav = wav_header.pack()
+
+        riff_header.chunk_size = self.get_riff_chunk_size(packed_wav, format_header, data)
+        
+        result = riff_header.pack() + packed_wav + format_header
         
         return result
     

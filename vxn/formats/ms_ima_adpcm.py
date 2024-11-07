@@ -31,9 +31,10 @@ class MS_IMA_ADPCM(WAV):
         header = MS_IMA_ADPCMHeader(
             channels = self.channels,
             sample_rate = self.sample_rate,
-            average_bytes_per_second = (self.sample_rate * self.bits * self.channels) // 8,
+            # average_bytes_per_second = (self.sample_rate * self.bits * self.channels) // 8,
+            average_bytes_per_second = self.sample_rate,
             block_align = self.block_align,
-            bits_per_sample = self.bits,
+            bits_per_sample = self.bits // 4,
         )
         
         extended_data = MS_IMA_ADPCMExtendedData(
@@ -44,9 +45,13 @@ class MS_IMA_ADPCM(WAV):
         extended_data.size = (extended_data.__dataclass_struct__.size - 2)
         
         header.chunk_size = (header.__dataclass_struct__.size - 8) + extended_data.__dataclass_struct__.size
+        # header.chunk_size = self.num_samples * 4
         
         fact = MS_IMA_ADPCMFact(
             uncompressed_size = self.num_samples,
         )
         
         return header.pack() + extended_data.pack() + fact.pack()
+
+    def get_riff_chunk_size(self, wav_header: bytes, format_header: bytes, data: bytes):
+        return self.num_samples * 4
