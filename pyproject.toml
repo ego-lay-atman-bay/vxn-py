@@ -30,5 +30,5 @@ version = { attr = "vxn.__version__" }
 [tool.setuptools.packages.find]
 include = ["vxn"]
 
-[project.scripts]
-vxndec = 'vxn.__main__:main'
+# [project.scripts]
+# vxndec = 'vxn.__main__:main'
