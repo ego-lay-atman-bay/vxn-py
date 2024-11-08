@@ -6,13 +6,13 @@
 Install with python
 
 ```shell
-pip install git+[https://ego](https://github.com/ego-lay-atman-bay/vxn-py)
+pip install git+https://github.com/ego-lay-atman-bay/vxn-py
 ```
 
 Update
 
 ```shell
-pip install --upgrade git+[https://ego](https://github.com/ego-lay-atman-bay/vxn-py) --force
+pip install --upgrade git+https://github.com/ego-lay-atman-bay/vxn-py --force
 ```
 
 # Usage
