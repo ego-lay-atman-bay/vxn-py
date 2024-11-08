@@ -7,7 +7,7 @@ from typing import Annotated, BinaryIO
 import dataclasses_struct as dcs
 
 from .file_utils import is_binary_file, is_text_file, is_eof, get_filesize
-from .formats import MPC, PCM, MS_ADPCM, IMA_ADPCM
+from .formats import MPC, PCM, MS_ADPCM, MS_IMA_ADPCM
 
 
 @dcs.dataclass()
@@ -41,7 +41,7 @@ class VXN():
         self.chunks = {}
         self.format: Afmt | None = None
         self.streams_data: list[SegmStream] = []
-        self.streams: list[PCM | MS_ADPCM | IMA_ADPCM | MPC] = []
+        self.streams: list[PCM | MS_ADPCM | MS_IMA_ADPCM | MPC] = []
         self.coefs: list[tuple[int]] = []
 
         if file != None:
@@ -175,7 +175,7 @@ class VXN():
                 assert self.format.bits in [4, 16] # 16=common, 4=Asphalt Injection (Vita)
 
                 for stream in self.streams_data:
-                    result.append(IMA_ADPCM(
+                    result.append(MS_IMA_ADPCM(
                         buffer[stream.stream_offset:stream.stream_offset + stream.stream_size],
                         block_align = self.format.block_align,
                         sample_rate = self.format.sample_rate,
