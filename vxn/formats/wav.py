@@ -30,7 +30,7 @@ class WAV_DATA():
 class WAV(AudioFormat):
     EXTENSION = 'wav'
     MAGIC = b'RIFF'
-    MIME = 'audio/wav'
+    MIME = 'audio/x-wav'
     
     FORMAT_HEADER = FormatHeader
     
