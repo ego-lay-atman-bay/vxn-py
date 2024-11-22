@@ -57,3 +57,15 @@ class AudioFormat():
         
         with open(filename, 'wb') as file:
             file.write(data)
+    
+    @property
+    def metadata(self):
+        return {
+            'encoding': self.ENCODING,
+            'mime': self.MIME,
+            'extension': self.EXTENSION,
+            'sample_rate': self.sample_rate,
+            'channels': self.channels,
+            'samples': self.num_samples,
+            'duration': self.duration,
+        }
