@@ -2,7 +2,7 @@ __version__ = '1.0.0'
 __author__ = 'ego-lay-atman-bay'
 
 from .vxn import VXN
-import formats
+from . import formats
 
 def register_filetypes():
     """Register filetypes for VXN and MPC in the `filetype` module.
