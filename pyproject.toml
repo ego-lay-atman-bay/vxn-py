@@ -19,6 +19,9 @@ classifiers = [
 dependencies = []
 dynamic = ["version"]
 
+[project.optional-dependencies]
+filetype = ['filetype']
+
 [project.urls]
 "Homepage" = "https://github.com/ego-lay-atman-bay/vxn-py"
 "Bug Tracker" = "https://github.com/ego-lay-atman-bay/vxn-py/issues"

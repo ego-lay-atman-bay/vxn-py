@@ -39,3 +39,8 @@ def register_filetypes():
             return buf[0:4] == b'MPCK'
     
     filetype.add_type(MPCType)
+
+try:
+    register_filetypes()
+except:
+    pass
