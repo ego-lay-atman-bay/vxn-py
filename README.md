@@ -17,10 +17,19 @@ pip install --upgrade git+https://github.com/ego-lay-atman-bay/vxn-py --force
 
 # Usage
 
+```shell
+python -m vxn extract "file.vxn"
+python -m vxn extract -h
+vxndec "file.vxn"
+vxndec -h
+```
+
+Or within code.
+
 ```python
 from vxn import VXN
 
 v = VXN('path/to/file.vxn')
 
-v.streams[0].save('out.wav') # or 'out.mpc'
+v.streams[0].save(f'out.{v.streams[0].EXTENSION}')
 ```
