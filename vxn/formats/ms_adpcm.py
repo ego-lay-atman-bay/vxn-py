@@ -28,6 +28,9 @@ class MS_ADPCMFact():
     uncompressed_size: dcs.U32 = 0
 
 class MS_ADPCM(WAV):
+    @property
+    def ENCODING(self):
+        return f'Microsoft {self.bits}-bit ADPCM'
     
     def __init__(
         self,

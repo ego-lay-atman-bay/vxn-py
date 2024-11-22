@@ -15,6 +15,10 @@ class PCMHeader():
     bits_per_sample: dcs.U16 = 0
 
 class PCM(WAV):
+    @property
+    def ENCODING(self):
+        return f'{self.bits}-bit Little Endian PCM'
+    
     def create_format_header(self) -> bytes:
         header = PCMHeader(
             channels = self.channels,

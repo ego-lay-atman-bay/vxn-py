@@ -30,6 +30,7 @@ class WAV_DATA():
 class WAV(AudioFormat):
     EXTENSION = 'wav'
     MAGIC = b'RIFF'
+    MIME = 'audio/wav'
     
     FORMAT_HEADER = FormatHeader
     
@@ -43,14 +44,15 @@ class WAV(AudioFormat):
         channels: int,
         bits: int = 16,
     ) -> None:
-        super().__init__(data)
-        
-        self.block_align = block_align
-        self.sample_rate = sample_rate
-        self.num_samples = num_samples
-        self.stream_size = stream_size
-        self.channels = channels
-        self.bits = bits
+        super().__init__(
+            data,
+            block_align,
+            sample_rate,
+            num_samples,
+            stream_size,
+            channels,
+            bits,
+        )
     
     def create_format_header(self) -> bytes:
         return b''
