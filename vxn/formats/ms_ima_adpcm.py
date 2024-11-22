@@ -27,6 +27,9 @@ class MS_IMA_ADPCMFact():
     uncompressed_size: dcs.U32 = 0
 
 class MS_IMA_ADPCM(WAV):
+    ENCODING = 'Microsoft 4-bit IMA ADPCM'
+    
+    
     def create_format_header(self):
         header = MS_IMA_ADPCMHeader(
             channels = self.channels,
@@ -34,7 +37,7 @@ class MS_IMA_ADPCM(WAV):
             # average_bytes_per_second = (self.sample_rate * self.bits * self.channels) // 8,
             average_bytes_per_second = self.sample_rate,
             block_align = self.block_align,
-            bits_per_sample = self.bits // 4,
+            bits_per_sample = 4,
         )
         
         extended_data = MS_IMA_ADPCMExtendedData(

@@ -83,7 +83,7 @@ class VXN():
                     )
                 ]
             
-            self.streams = self._read_data(self.chunks['Data'])
+            self.streams = self._read_audio_data(self.chunks['Data'])
     
     
     def _read_header(self, file: BinaryIO) -> Header:
@@ -137,7 +137,7 @@ class VXN():
         
         return streams
     
-    def _read_data(self, buffer: bytes):
+    def _read_audio_data(self, buffer: bytes):
         result = []
         
         match self.format.codec:
@@ -190,6 +190,15 @@ class VXN():
                 assert self.format.bits == -1, 'failed to decode musepack data'
 
                 for stream in self.streams_data:
-                    result.append(MPC(buffer[stream.stream_offset:stream.stream_offset + stream.stream_size]))
+                    result.append(MPC(
+                        buffer[stream.stream_offset:stream.stream_offset + stream.stream_size],
+
+                        block_align = self.format.block_align,
+                        sample_rate = self.format.sample_rate,
+                        num_samples = stream.num_samples,
+                        stream_size = stream.stream_size,
+                        channels = self.format.channels,
+                        bits = self.format.bits,
+                    ))
         
         return result
