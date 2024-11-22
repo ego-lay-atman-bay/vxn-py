@@ -116,8 +116,9 @@ class VXN():
         return header
             
     
-    def check_magic(self, magic: Annotated[bytes, 4]):
-        return magic[0:4] == self.MAGIC
+    @classmethod
+    def check_magic(cls, magic: Annotated[bytes, 4]):
+        return magic[0:4] == cls.MAGIC
     
     def _read_chunk(self, file: BinaryIO) -> tuple[str, bytes]:
         format = '4s1I'
