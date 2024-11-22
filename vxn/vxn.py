@@ -59,6 +59,13 @@ class VXN():
         else:
             raise TypeError('cannot open file')
         
+        self.header = Header()
+        self.chunks = {}
+        self.format: Afmt | None = None
+        self.streams_data: list[SegmStream] = []
+        self.streams: list[PCM | MS_ADPCM | MS_IMA_ADPCM | MPC] = []
+        self.coefs: list[tuple[int]] = []
+        
         self.chunks = {}
         
         with context_manager as open_file:
@@ -202,3 +209,11 @@ class VXN():
                     ))
         
         return result
+    
+    @property
+    def metadata(self):
+        return {
+            'sample_rate': self.format.sample_rate,
+            'channels': self.format.channels,
+            'stream_count': len(self.streams),
+        }
