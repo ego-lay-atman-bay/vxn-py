@@ -35,6 +35,7 @@ class SegmStream():
 class VXN():
     EXTENSION = 'vxn'
     MAGIC = b'VoxN'
+    MIME = 'audio/x-vxn'
     
     def __init__(self, file: str | bytes | bytearray | BinaryIO | None = None) -> None:
         self.header = Header()

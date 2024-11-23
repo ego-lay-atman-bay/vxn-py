@@ -11,8 +11,8 @@ def register_filetypes():
     from filetype import filetype
     
     class VXNType(filetype.Type):
-        MIME = 'audio/x-vxn'
-        EXTENSION = 'vxn'
+        MIME = VXN.MIME
+        EXTENSION = VXN.EXTENSION
         
         def __init__(self):
             super().__init__(
