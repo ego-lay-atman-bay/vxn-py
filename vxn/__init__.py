@@ -23,7 +23,7 @@ def register_filetypes():
         def match(self, buf: bytes):
             return VXN.check_magic(buf)
     
-    filetype.add_type(VXNType)
+    filetype.add_type(VXNType())
     
     class MPCType(filetype.Type):
         MIME = formats.MPC.MIME
@@ -38,7 +38,7 @@ def register_filetypes():
         def match(self, buf: bytes):
             return buf[0:4] == b'MPCK'
     
-    filetype.add_type(MPCType)
+    filetype.add_type(MPCType())
 
 try:
     register_filetypes()
