@@ -32,8 +32,8 @@ filetype = ['filetype']
 [tool.setuptools.dynamic]
 version = { attr = "vxn.__version__" }
 
-[tool.setuptools.packages.find]
-include = ["vxn"]
+[tool.setuptools]
+package-dir = { "vxn" = "vxn" }
 
 [project.scripts]
 vxndec = 'vxn.__main__:extract_command'
