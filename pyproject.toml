@@ -27,7 +27,7 @@ filetype = ['filetype']
 [project.urls]
 "Homepage" = "https://github.com/ego-lay-atman-bay/vxn-py"
 "Bug Tracker" = "https://github.com/ego-lay-atman-bay/vxn-py/issues"
-"Documentation" = "https://ego-lay-atman-bay.github.io/vxn-py/"
+# "Documentation" = "https://ego-lay-atman-bay.github.io/vxn-py/"
 
 [tool.setuptools.dynamic]
 version = { attr = "vxn.__version__" }
