@@ -3,7 +3,7 @@ from typing import Annotated
 
 from .wav import WAV
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class PCMHeader():
     fmt: Annotated[bytes, 4] = b'fmt '
     chunk_size: dcs.U32 = 16

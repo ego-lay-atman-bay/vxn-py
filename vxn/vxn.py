@@ -10,13 +10,13 @@ from .file_utils import is_binary_file, is_text_file, is_eof, get_filesize, read
 from .formats import MPC, PCM, MS_ADPCM, MS_IMA_ADPCM
 
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class Header():
     version: Annotated[bytes, 8] = b'0.0.1\x00\x00\x00'
     filesize: dcs.U32 = 0
     unknown: Annotated[bytes, 4] = b'\x00\x00\x00\x00'
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class Afmt():
     codec: dcs.U16
     channels: dcs.U16
@@ -24,7 +24,7 @@ class Afmt():
     block_align: dcs.U16
     bits: dcs.I16
     
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class SegmStream():
     stream_offset: dcs.U32
     stream_size: dcs.U32

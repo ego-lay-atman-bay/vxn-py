@@ -4,7 +4,7 @@ import struct
 
 from .wav import WAV
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class MS_IMA_ADPCMHeader():
     fmt: Annotated[bytes, 4] = b'fmt '
     chunk_size: dcs.U32 = 0
@@ -15,12 +15,12 @@ class MS_IMA_ADPCMHeader():
     block_align: dcs.U16 = 0
     bits_per_sample: dcs.U16 = 0
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class MS_IMA_ADPCMExtendedData():
     size: dcs.U16 = 2
     samples_per_block: dcs.U16 = 0
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class MS_IMA_ADPCMFact():
     chunk_id: Annotated[bytes, 4] = b'fact'
     chunk_size: dcs.U32 = 4

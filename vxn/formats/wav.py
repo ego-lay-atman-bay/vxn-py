@@ -5,23 +5,23 @@ import dataclasses_struct as dcs
 
 from .audioformat import AudioFormat
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class RIFFHeader():
     magic: Annotated[bytes, 4] = b'RIFF'
     chunk_size: dcs.U32 = 0
 
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class WAVEHeader():
     magic: Annotated[bytes, 4] = b'WAVE'
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class FormatHeader():
     fmt: Annotated[bytes, 4] = b'fmt '
     chunk_size: dcs.U32 = 0
     format_tag: dcs.U32 = 0
 
-@dcs.dataclass()
+@dcs.dataclass_struct(size = 'std')
 class WAV_DATA():
     riff: RIFFHeader
     wave: WAVEHeader
