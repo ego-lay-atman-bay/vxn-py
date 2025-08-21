@@ -1,4 +1,4 @@
-from typing import IO
+from typing import IO, BinaryIO, overload
 import io
 
 import os
@@ -28,3 +28,15 @@ def get_filesize(file: IO):
     size = file.tell()
     file.seek(pos)
     return size
+
+@overload
+def read_ascii_string(file: bytes) -> str: ...
+@overload
+def read_ascii_string(file: BinaryIO, length: int = 64) -> str: ...
+def read_ascii_string(file: BinaryIO | bytes, length: int = 64) -> str:
+    if isinstance(file, (bytes, bytearray)):
+        data = file
+    else:
+        data = file.read(length)
+
+    return data.split(b'\x00', 1)[0].decode('ascii', errors='ignore')

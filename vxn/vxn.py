@@ -6,7 +6,7 @@ from typing import Annotated, BinaryIO
 
 import dataclasses_struct as dcs
 
-from .file_utils import is_binary_file, is_text_file, is_eof, get_filesize
+from .file_utils import is_binary_file, is_text_file, is_eof, get_filesize, read_ascii_string
 from .formats import MPC, PCM, MS_ADPCM, MS_IMA_ADPCM
 
 
@@ -44,6 +44,7 @@ class VXN():
         self.streams_data: list[SegmStream] = []
         self.streams: list[PCM | MS_ADPCM | MS_IMA_ADPCM | MPC] = []
         self.coefs: list[tuple[int]] = []
+        self.stat: list = []
 
         if file != None:
             self.read(file)
@@ -66,6 +67,7 @@ class VXN():
         self.streams_data: list[SegmStream] = []
         self.streams: list[PCM | MS_ADPCM | MS_IMA_ADPCM | MPC] = []
         self.coefs: list[tuple[int]] = []
+        self.stat = []
         
         self.chunks = {}
         
@@ -90,6 +92,9 @@ class VXN():
                         )[0] * 4)]
                     )
                 ]
+            
+            if 'Stat' in self.chunks:
+                self.stat = self._read_stat(self.chunks['Stat'])
             
             self.streams = self._read_audio_data(self.chunks['Data'])
     
@@ -211,6 +216,19 @@ class VXN():
                     ))
         
         return result
+    
+    def _read_stat(self, buffer: bytes):
+        num_tracks = struct.unpack('<I', buffer[0:4])
+        
+        item_format = '<1I28s'
+        
+        return [(
+            item[0],
+            read_ascii_string(item[1]),
+            *item[2:]
+        ) for item in struct.iter_unpack(item_format, buffer[4:])]
+        
+        
     
     @property
     def metadata(self):
